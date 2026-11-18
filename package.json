@@ -1,0 +1,23 @@
+{
+  "name": "qpredict",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "QPredict: sealed predictions on QoreChain \u2014 commit a hashed prediction, reveal after the target block, the chain decides.",
+  "scripts": {
+    "deploy:qpredict": "tsx --env-file=.env scripts/deploy-qpredict.ts",
+    "e2e": "tsx --env-file=.env scripts/e2e-onchain.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.4.0",
+    "@noble/post-quantum": "^0.7.1",
+    "@qorechain/evm": "^0.14.0",
+    "viem": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
+  }
+}

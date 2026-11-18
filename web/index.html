@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QPredict — sealed predictions on QoreChain</title>
+<style>
+  :root { color-scheme: dark; --bg:#0b0b14; --card:#151524; --line:#2a2a44; --txt:#e8e8f2; --dim:#9a9ab2; --acc:#8b5cf6; --ok:#34d399; --bad:#f87171; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--txt); }
+  main { max-width: 680px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 40px; margin: 8px 0 4px; letter-spacing: .5px; }
+  .tag { color: var(--dim); font-size: 17px; margin-bottom: 24px; }
+  .card { background: var(--card); border:1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { margin: 0 0 10px; font-size: 18px; }
+  .card p { color: var(--dim); line-height: 1.55; margin: 6px 0; }
+  button { background: var(--acc); color: #fff; border: 0; border-radius: 10px; padding: 11px 18px; font-size: 15px; cursor: pointer; }
+  button:disabled { opacity: .45; cursor: default; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .pick { display:flex; gap:10px; margin: 12px 0; }
+  .pick button { flex:1; font-size: 17px; padding: 14px; background:#1d1d33; border:1px solid var(--line); color: var(--txt); }
+  .pick button.sel { background: var(--acc); border-color: var(--acc); }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; word-break: break-all; }
+  .win { color: var(--ok); font-weight: 700; }
+  .lose { color: var(--bad); font-weight: 700; }
+  .stat { font-size: 22px; font-weight: 700; }
+  .stat small { display:block; font-size: 12px; color: var(--dim); font-weight: 400; }
+  .stats { display:flex; gap: 28px; }
+  a { color: var(--acc); }
+</style>
+</head>
+<body>
+<main>
+  <div style="color:var(--acc); font-weight:700; letter-spacing:2px; font-size:12px;">QORECHAIN · DIANA TESTNET · QUANTUM PASS</div>
+  <h1>QPredict</h1>
+  <div class="tag">Seal a prediction nobody can peek at — not even you. The chain settles it.</div>
+
+  <div class="card">
+    <h2>How it works</h2>
+    <p>Pick <b>EVEN</b> or <b>ODD</b>. Your guess is hashed with a random salt in your browser and only the hash goes on-chain. The contract mixes that hash with the block your prediction lands in — its number, timestamp and proposer, none of which you can know when you sign — and fixes the outcome. Reveal your guess afterwards and the contract checks it against the seal and records the result forever. Leave it unrevealed too long and anyone can forfeit it as a loss: a sealed prediction can never be quietly buried.</p>
+    <p class="mono">Contract: 0x7f2006234a9f235abea91fd143af0d795b1cdbe8 (chain 9800)</p>
+  </div>
+
+  <div class="card">
+    <h2>1 · Connect wallet</h2>
+    <div class="row">
+      <button id="connect">Connect QoreX / MetaMask</button>
+      <span id="account" class="mono" style="color:var(--dim)"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2 · Seal your prediction</h2>
+    <div class="pick">
+      <button id="pickEven">EVEN</button>
+      <button id="pickOdd">ODD</button>
+    </div>
+    <div class="row">
+      <button id="commit" disabled>Seal prediction (on-chain)</button>
+      <span id="commitInfo" class="mono" style="color:var(--dim)"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3 · Reveal &amp; settle</h2>
+    <p>Your sealed predictions from this browser:</p>
+    <div id="mine"></div>
+  </div>
+
+  <div class="card">
+    <h2>Your record</h2>
+    <div class="stats">
+      <div class="stat"><span id="wins">–</span><small>wins</small></div>
+      <div class="stat"><span id="losses">–</span><small>losses</small></div>
+      <div class="stat"><span id="total">–</span><small>total sealed</small></div>
+    </div>
+    <p id="log" class="mono" style="color:var(--dim)"></p>
+  </div>
+
+  <p style="color:var(--dim); font-size:13px;">Testnet only — QOR here has no real value. Built with create-qorechain-dapp and @qorechain/evm for Build Before Q-Day. Source: <a href="https://github.com/anpratama/qpredict">github.com/anpratama/qpredict</a></p>
+</main>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
